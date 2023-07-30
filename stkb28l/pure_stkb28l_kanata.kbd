@@ -1,0 +1,97 @@
+;; This is configuration file for Kanata
+;; Implemeted of Standard Staggered Keyboard 28 key Left hand
+;; For how to use this configuration file
+;; @see https://github.com/jtroo/kanata 
+
+
+;; Define keyboard source for typing
+
+(defsrc
+  grv  1    2    3    4    5
+  tab  q    w    e    r    t
+  caps a    s    d    f    g
+  lsft z    x    c    v    b
+  lctl lmet lalt           spc
+)
+
+;; base layer (Qwerty)
+
+(deflayer base
+  esc  1    2    3    4    5  
+  @tab q    w    e    r    t 
+  @cap a    s    d    f    g 
+  lsft z    x    c    v    b 
+  lctl lmet lalt           @spc
+)
+
+
+;; flip layer (Qwerty)
+
+(deflayer flip
+  grv   0    9    8    7    6  
+  bspc  p    o    i    u    y 
+  ret   ;    l    k    j    h
+  _     /    .    ,    m    n 
+  _     _    _            _
+)
+
+;; Nav layer 
+
+(deflayer nav
+  f12  f1   f2   f3   f4     f5  
+  _    home up   end  ins    pgup 
+  _    left down rght del    pgdn
+  _    next pp   mute voldwn volu 
+  _    _    _                @spcf
+)
+
+;; Nav flip layer
+
+(deflayer navf
+  f11  f10  f9   f8   f7   f6  
+  _    _    _    _    _    _
+  _    _    _    _    _    _
+  _    _    _    _    _    _ 
+  _    _    _              _
+)
+
+
+;; define alias of shift key
+
+(defalias
+  {   S-[
+  }   S-]
+  :   S-;
+  qtm   S-'
+  uds S--
+  +   S-=
+  nor S-\
+  til S-grv
+)
+
+
+;; symbol layer
+(deflayer symbol
+  @til {    }    '    -    =  
+  _    [    ]    @qtm @uds +   
+  _    _    _    _    @nor \
+  _    _    _    _    _    _ 
+  _    _    _              _
+)
+
+
+;; define tap-hold key
+
+(defalias
+  ;; tap: backtick (grave), hold: toggle layer-switching layer while held
+  tab (tap-hold 200 200 tab (layer-while-held symbol))
+
+  ;; tap for capslk, hold for nav layer
+  cap (tap-hold 200 200 spc (layer-while-held nav))
+
+  ;; tap for space hold for flip layer
+  spc (tap-hold 200 200 spc (layer-while-held flip))
+
+  ;; jump to nav flip layer (f6-f11)
+  spcf (layer-while-held navf)
+)
